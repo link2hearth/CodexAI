@@ -1,7 +1,13 @@
 // Paths to images. Replace the files in the assets folder to customize.
 
-const heroImage = 'assets/hero.png';
-const swordImage = 'assets/sword.png';
+const heroImage = 'assets/hero.svg';
+const swordImage = 'assets/sword.svg';
+
+const backgrounds = {
+  1: 'assets/world1.gif',
+  2: 'assets/world2.gif'
+};
+let currentWorld = 1;
 
 const backgrounds = {
   1: 'assets/world1.gif',
@@ -30,6 +36,7 @@ function setBackground(world) {
   const path = backgrounds[world];
   bgContainer.innerHTML = '';
   if (!path) return;
+
   const isVideo = /\.(mp4|webm|ogg)$/i.test(path);
   const el = document.createElement(isVideo ? 'video' : 'img');
   el.src = path;
@@ -40,6 +47,7 @@ function setBackground(world) {
     el.playsInline = true;
   }
   bgContainer.appendChild(el);
+
 }
 
 function updateDisplays() {
@@ -78,7 +86,7 @@ function spawnEnemy() {
   const enemyEl = document.createElement('img');
 
   const { level, hp } = getLevelInfo(killCount);
-  enemyEl.src = `assets/enemy${level}.png`;
+  enemyEl.src = 'assets/enemy.svg';
 
   enemyEl.className = 'enemy';
   enemyEl.style.left = gameArea.offsetWidth + 'px';
