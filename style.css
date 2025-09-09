@@ -27,19 +27,26 @@ body {
   overflow: hidden;
 }
 
+
+#hero,
+.enemy {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+
 #hero {
   position: absolute;
   bottom: 0;
   left: 50px;
-  width: 64px;
-  height: 64px;
+
 }
 
 .enemy {
   position: absolute;
   bottom: 0;
-  width: 64px;
-  height: 64px;
+
 }
 
 #characterMenu {
@@ -57,7 +64,6 @@ body {
   display: block;
 }
 
-
 .slot {
   margin: 10px 0;
   display: flex;
@@ -70,7 +76,6 @@ body {
   height: 64px;
   border: 1px solid #555;
 }
-
 
 button {
   padding: 6px 12px;

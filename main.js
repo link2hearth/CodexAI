@@ -1,8 +1,8 @@
 // Paths to images. Replace the files in the assets folder to customize.
-const heroImage = 'assets/hero.svg';
-const enemyImage = 'assets/enemy.svg';
 
-const swordImage = 'assets/sword.svg';
+const heroImage = 'assets/hero.png';
+const swordImage = 'assets/sword.png';
+
 
 const hero = document.getElementById('hero');
 hero.src = heroImage;
@@ -24,19 +24,34 @@ function updateDisplays() {
 
 let currentEnemy = null;
 
-function enemyHpForKillCount(count) {
-  return (Math.floor(count / 10) + 1) * 10;
+
+// Configuration for enemy spawning
+const ENEMIES_PER_STAGE = 10; // Change to set how many foes share the same level
+const SUBLEVELS_PER_WORLD = 3; // Produces level strings like 1.1, 1.2...
+
+function getLevelInfo(count) {
+  const stage = Math.floor(count / ENEMIES_PER_STAGE);
+  const world = Math.floor(stage / SUBLEVELS_PER_WORLD) + 1;
+  const sub = (stage % SUBLEVELS_PER_WORLD) + 1;
+  const level = `${world}.${sub}`;
+  const hp = (stage + 1) * 10;
+  return { level, hp };
+
 }
 
 function spawnEnemy() {
   if (currentEnemy) return;
   const enemyEl = document.createElement('img');
-  enemyEl.src = enemyImage;
+
+  const { level, hp } = getLevelInfo(killCount);
+  enemyEl.src = `assets/enemy${level}.png`;
+
   enemyEl.className = 'enemy';
   enemyEl.style.left = gameArea.offsetWidth + 'px';
   gameArea.appendChild(enemyEl);
 
-  const enemy = { element: enemyEl, hp: enemyHpForKillCount(killCount), attack: 1 };
+
+  const enemy = { element: enemyEl, hp, attack: 1 };
   currentEnemy = enemy;
 
 
