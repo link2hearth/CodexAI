@@ -1,23 +1,10 @@
-// Paths to images. Replace the files in the assets folder to customize.
+import { getAsset } from './assets.js';
 
-const heroImage = 'assets/hero.svg';
-const swordImage = 'assets/sword.svg';
-
-const backgrounds = {
-  1: 'assets/world1.gif',
-  2: 'assets/world2.gif'
-};
+const WORLD_ORDER = ['prairie', 'forest', 'dunes', 'cave', 'temple'];
 let currentWorld = 1;
-
-const backgrounds = {
-  1: 'assets/world1.gif',
-  2: 'assets/world2.mp4'
-};
-let currentWorld = 1;
-
 
 const hero = document.getElementById('hero');
-hero.src = heroImage;
+hero.src = getAsset('hero');
 const gameArea = document.getElementById('game');
 const bgContainer = document.getElementById('background');
 const worldNameDisplay = document.getElementById('worldName');
@@ -25,15 +12,16 @@ const enemyLevelDisplay = document.getElementById('enemyLevel');
 
 // Hero stats and equipment
 const heroStats = { hp: 100, baseAttack: 0, attack: 0 };
-const weapon = { attack: 2, img: swordImage };
+const weapon = { attack: 2, img: getAsset('equipment', 'weapon') };
 heroStats.attack = heroStats.baseAttack + weapon.attack;
 document.getElementById('weaponSlot').src = weapon.img;
 
 let killCount = 0;
 const killDisplay = document.getElementById('killCount');
 const heroHpDisplay = document.getElementById('heroHp');
-function setBackground(world) {
-  const path = backgrounds[world];
+function setBackground(worldIndex) {
+  const name = WORLD_ORDER[worldIndex - 1];
+  const path = getAsset('backgrounds', name);
   bgContainer.innerHTML = '';
   if (!path) return;
 
@@ -55,9 +43,9 @@ function updateDisplays() {
   heroHpDisplay.textContent = `HP: ${heroStats.hp}`;
   const { level } = getLevelInfo(killCount);
   const [world] = level.split('.');
-  worldNameDisplay.textContent = world;
-  enemyLevelDisplay.textContent = level;
   const worldNum = parseInt(world, 10);
+  worldNameDisplay.textContent = WORLD_ORDER[worldNum - 1];
+  enemyLevelDisplay.textContent = level;
   if (worldNum !== currentWorld) {
     currentWorld = worldNum;
     setBackground(currentWorld);
@@ -70,6 +58,7 @@ let currentEnemy = null;
 // Configuration for enemy spawning
 const ENEMIES_PER_STAGE = 10; // Change to set how many foes share the same level
 const SUBLEVELS_PER_WORLD = 3; // Produces level strings like 1.1, 1.2...
+const ENEMY_TYPES = ['slime', 'bat', 'snake', 'shroom'];
 
 function getLevelInfo(count) {
   const stage = Math.floor(count / ENEMIES_PER_STAGE);
@@ -86,7 +75,8 @@ function spawnEnemy() {
   const enemyEl = document.createElement('img');
 
   const { level, hp } = getLevelInfo(killCount);
-  enemyEl.src = 'assets/enemy.svg';
+  const enemyType = ENEMY_TYPES[Math.floor(Math.random() * ENEMY_TYPES.length)];
+  enemyEl.src = getAsset('enemies', enemyType);
 
   enemyEl.className = 'enemy';
   enemyEl.style.left = gameArea.offsetWidth + 'px';
