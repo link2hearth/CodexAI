@@ -9,6 +9,12 @@ const backgrounds = {
 };
 let currentWorld = 1;
 
+const backgrounds = {
+  1: 'assets/world1.gif',
+  2: 'assets/world2.mp4'
+};
+let currentWorld = 1;
+
 
 const hero = document.getElementById('hero');
 hero.src = heroImage;
@@ -30,19 +36,18 @@ function setBackground(world) {
   const path = backgrounds[world];
   bgContainer.innerHTML = '';
   if (!path) return;
-  if (path.endsWith('.mp4') || path.endsWith('.webm')) {
-    const video = document.createElement('video');
-    video.src = path;
-    video.autoplay = true;
-    video.loop = true;
-    video.muted = true;
-    video.playsInline = true;
-    bgContainer.appendChild(video);
-  } else {
-    const img = document.createElement('img');
-    img.src = path;
-    bgContainer.appendChild(img);
+
+  const isVideo = /\.(mp4|webm|ogg)$/i.test(path);
+  const el = document.createElement(isVideo ? 'video' : 'img');
+  el.src = path;
+  if (isVideo) {
+    el.autoplay = true;
+    el.loop = true;
+    el.muted = true;
+    el.playsInline = true;
   }
+  bgContainer.appendChild(el);
+
 }
 
 function updateDisplays() {
