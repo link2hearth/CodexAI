@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Idle Mushrooms Prototype</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="ui">
+    <button id="characterBtn">Personnage</button>
+    <div id="heroHp">HP: 100</div>
+    <div id="killCount">Enemies defeated: 0</div>
+  </div>
+  <div id="game">
+    <img id="hero" alt="Hero" />
+  </div>
+  <div id="characterMenu" class="hidden">
+    <h2>Équipement</h2>
+    <div class="slot">
+      <span>Arme&nbsp;:</span>
+      <img id="weaponSlot" alt="Arme équipée" />
+    </div>
+    <button id="closeCharacter">Fermer</button>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
