@@ -12,9 +12,11 @@ body {
   z-index: 10;
 }
 
+
 #ui div {
   margin-top: 4px;
 }
+
 
 #game {
   position: relative;
@@ -25,22 +27,26 @@ body {
   overflow: hidden;
 }
 
+
 #hero,
 .enemy {
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
 }
+
 
 #hero {
   position: absolute;
   bottom: 0;
   left: 50px;
+
 }
 
 .enemy {
   position: absolute;
   bottom: 0;
+
 }
 
 #characterMenu {
