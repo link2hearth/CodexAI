@@ -12,9 +12,11 @@ body {
   z-index: 10;
 }
 
+
 #ui div {
   margin-top: 4px;
 }
+
 
 #game {
   position: relative;
@@ -55,6 +57,7 @@ body {
   display: block;
 }
 
+
 .slot {
   margin: 10px 0;
   display: flex;
@@ -67,6 +70,7 @@ body {
   height: 64px;
   border: 1px solid #555;
 }
+
 
 button {
   padding: 6px 12px;

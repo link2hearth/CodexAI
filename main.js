@@ -1,6 +1,7 @@
 // Paths to images. Replace the files in the assets folder to customize.
 const heroImage = 'assets/hero.svg';
 const enemyImage = 'assets/enemy.svg';
+
 const swordImage = 'assets/sword.svg';
 
 const hero = document.getElementById('hero');
@@ -38,10 +39,12 @@ function spawnEnemy() {
   const enemy = { element: enemyEl, hp: enemyHpForKillCount(killCount), attack: 1 };
   currentEnemy = enemy;
 
+
   let position = gameArea.offsetWidth;
   const speed = 2 + Math.random() * 2;
 
   function move() {
+
     if (currentEnemy !== enemy) return;
     position -= speed;
     enemyEl.style.left = position + 'px';
@@ -49,12 +52,14 @@ function spawnEnemy() {
     if (position < hero.offsetLeft + hero.offsetWidth) {
       enemyEl.style.left = hero.offsetLeft + hero.offsetWidth + 'px';
       startCombat(enemy);
+
       return;
     }
     requestAnimationFrame(move);
   }
   requestAnimationFrame(move);
 }
+
 
 function startCombat(enemy) {
   const interval = setInterval(() => {
@@ -80,6 +85,7 @@ function startCombat(enemy) {
 
 updateDisplays();
 spawnEnemy();
+
 
 // Character menu logic
 const characterBtn = document.getElementById('characterBtn');
