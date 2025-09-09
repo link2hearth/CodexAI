@@ -6,14 +6,19 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="ui">
-    <button id="characterBtn">Personnage</button>
-
-    <div id="heroHp">HP: 100</div>
-
-    <div id="killCount">Enemies defeated: 0</div>
-  </div>
+  <header id="topBar">
+    <div id="info">
+      <span>Monde&nbsp;: <span id="worldName">1</span></span>
+      <span>Niveau des ennemis&nbsp;: <span id="enemyLevel">1.1</span></span>
+      <span id="heroHp">HP: 100</span>
+      <span id="killCount">Enemies defeated: 0</span>
+    </div>
+    <nav id="menus">
+      <button id="characterBtn">Équipement</button>
+    </nav>
+  </header>
   <div id="game">
+    <div id="background"></div>
     <img id="hero" alt="Hero" />
   </div>
   <div id="characterMenu" class="hidden">
