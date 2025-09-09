@@ -12,6 +12,12 @@ body {
   z-index: 10;
 }
 
+
+#ui div {
+  margin-top: 4px;
+}
+
+
 #game {
   position: relative;
   width: 800px;
@@ -50,6 +56,21 @@ body {
 #characterMenu.visible {
   display: block;
 }
+
+
+.slot {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.slot img {
+  width: 64px;
+  height: 64px;
+  border: 1px solid #555;
+}
+
 
 button {
   padding: 6px 12px;
