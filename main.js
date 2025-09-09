@@ -1,12 +1,21 @@
 // Paths to images. Replace the files in the assets folder to customize.
 
-const heroImage = 'assets/hero.png';
-const swordImage = 'assets/sword.png';
+const heroImage = 'assets/hero.svg';
+const swordImage = 'assets/sword.svg';
+
+const backgrounds = {
+  1: 'assets/world1.gif',
+  2: 'assets/world2.gif'
+};
+let currentWorld = 1;
 
 
 const hero = document.getElementById('hero');
 hero.src = heroImage;
 const gameArea = document.getElementById('game');
+const bgContainer = document.getElementById('background');
+const worldNameDisplay = document.getElementById('worldName');
+const enemyLevelDisplay = document.getElementById('enemyLevel');
 
 // Hero stats and equipment
 const heroStats = { hp: 100, baseAttack: 0, attack: 0 };
@@ -17,9 +26,37 @@ document.getElementById('weaponSlot').src = weapon.img;
 let killCount = 0;
 const killDisplay = document.getElementById('killCount');
 const heroHpDisplay = document.getElementById('heroHp');
+function setBackground(world) {
+  const path = backgrounds[world];
+  bgContainer.innerHTML = '';
+  if (!path) return;
+  if (path.endsWith('.mp4') || path.endsWith('.webm')) {
+    const video = document.createElement('video');
+    video.src = path;
+    video.autoplay = true;
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+    bgContainer.appendChild(video);
+  } else {
+    const img = document.createElement('img');
+    img.src = path;
+    bgContainer.appendChild(img);
+  }
+}
+
 function updateDisplays() {
   killDisplay.textContent = `Enemies defeated: ${killCount}`;
   heroHpDisplay.textContent = `HP: ${heroStats.hp}`;
+  const { level } = getLevelInfo(killCount);
+  const [world] = level.split('.');
+  worldNameDisplay.textContent = world;
+  enemyLevelDisplay.textContent = level;
+  const worldNum = parseInt(world, 10);
+  if (worldNum !== currentWorld) {
+    currentWorld = worldNum;
+    setBackground(currentWorld);
+  }
 }
 
 let currentEnemy = null;
@@ -44,7 +81,7 @@ function spawnEnemy() {
   const enemyEl = document.createElement('img');
 
   const { level, hp } = getLevelInfo(killCount);
-  enemyEl.src = `assets/enemy${level}.png`;
+  enemyEl.src = 'assets/enemy.svg';
 
   enemyEl.className = 'enemy';
   enemyEl.style.left = gameArea.offsetWidth + 'px';
@@ -98,6 +135,14 @@ function startCombat(enemy) {
   }, 1000);
 }
 
+function resizeGame() {
+  const topBar = document.getElementById('topBar');
+  gameArea.style.height = window.innerHeight - topBar.offsetHeight + 'px';
+}
+
+window.addEventListener('resize', resizeGame);
+resizeGame();
+setBackground(currentWorld);
 updateDisplays();
 spawnEnemy();
 
