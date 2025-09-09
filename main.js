@@ -3,10 +3,19 @@
 const heroImage = 'assets/hero.png';
 const swordImage = 'assets/sword.png';
 
+const backgrounds = {
+  1: 'assets/world1.gif',
+  2: 'assets/world2.mp4'
+};
+let currentWorld = 1;
+
 
 const hero = document.getElementById('hero');
 hero.src = heroImage;
 const gameArea = document.getElementById('game');
+const bgContainer = document.getElementById('background');
+const worldNameDisplay = document.getElementById('worldName');
+const enemyLevelDisplay = document.getElementById('enemyLevel');
 
 // Hero stats and equipment
 const heroStats = { hp: 100, baseAttack: 0, attack: 0 };
@@ -17,9 +26,34 @@ document.getElementById('weaponSlot').src = weapon.img;
 let killCount = 0;
 const killDisplay = document.getElementById('killCount');
 const heroHpDisplay = document.getElementById('heroHp');
+function setBackground(world) {
+  const path = backgrounds[world];
+  bgContainer.innerHTML = '';
+  if (!path) return;
+  const isVideo = /\.(mp4|webm|ogg)$/i.test(path);
+  const el = document.createElement(isVideo ? 'video' : 'img');
+  el.src = path;
+  if (isVideo) {
+    el.autoplay = true;
+    el.loop = true;
+    el.muted = true;
+    el.playsInline = true;
+  }
+  bgContainer.appendChild(el);
+}
+
 function updateDisplays() {
   killDisplay.textContent = `Enemies defeated: ${killCount}`;
   heroHpDisplay.textContent = `HP: ${heroStats.hp}`;
+  const { level } = getLevelInfo(killCount);
+  const [world] = level.split('.');
+  worldNameDisplay.textContent = world;
+  enemyLevelDisplay.textContent = level;
+  const worldNum = parseInt(world, 10);
+  if (worldNum !== currentWorld) {
+    currentWorld = worldNum;
+    setBackground(currentWorld);
+  }
 }
 
 let currentEnemy = null;
@@ -98,6 +132,14 @@ function startCombat(enemy) {
   }, 1000);
 }
 
+function resizeGame() {
+  const topBar = document.getElementById('topBar');
+  gameArea.style.height = window.innerHeight - topBar.offsetHeight + 'px';
+}
+
+window.addEventListener('resize', resizeGame);
+resizeGame();
+setBackground(currentWorld);
 updateDisplays();
 spawnEnemy();
 
