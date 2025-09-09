@@ -1,0 +1,8 @@
+{
+  "name": "idle-mushrooms-prototype",
+  "version": "0.1.0",
+  "description": "Simple idle game prototype",
+  "scripts": {
+    "test": "echo 'No tests yet'"
+  }
+}
