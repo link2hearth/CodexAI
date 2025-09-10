@@ -50,8 +50,8 @@ body {
 
 #hero {
   position: absolute;
-  bottom: 0;
-  left: 50px;
+  bottom: -20px;
+  left: 120px;
 
 }
 
